@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="2026 台北市長選情的每日整理:大事件、兩位候選人公開行程、民調走勢、12 區分析與預測模型。每天早晚各更新一次。">
+<meta property="og:title" content="台北選情簡報 洋流版">
+<meta property="og:description" content="2026 台北市長選情的每日整理:大事件、行程、民調、12 區分析與預測模型。">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#F26B1D">
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}*,*::before,*::after{box-sizing:inherit}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>台北選情簡報 洋流版</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+/* Layout: a sunrise-orange masthead cut by fast diagonal lines (the campaign's "speed" motif), then one reading column. Same content as the neutral edition; only the palette and type change. Shen = orange squares, Jiang = slate circles. */
+:root{
+  --bg:#FFF7F0; --surface:#FFFFFF; --ink:#1E1A17; --muted:#6B5F57; --line:#EFDCCB;
+  --sun:#F26B1D; --sun-text:#B8480A; --onsun:#1E1A17; --band:#F6E6D8;
+  --jiang:#5D6B7A; --shen:#F26B1D; --leaf:#2F8A5B;
+  --display:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --figure:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#15110E; --surface:#201914; --ink:#F3E9E0; --muted:#B5A497; --line:#3A2D24;
+  --sun:#FF7A2E; --sun-text:#FF9A5C; --band:#2E241D;
+  --jiang:#A7B3C0; --shen:#FF8A3D; --leaf:#6CC596; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#15110E; --surface:#201914; --ink:#F3E9E0; --muted:#B5A497; --line:#3A2D24;
+  --sun:#FF7A2E; --sun-text:#FF9A5C; --band:#2E241D;
+  --jiang:#A7B3C0; --shen:#FF8A3D; --leaf:#6CC596; color-scheme:dark }
+
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;padding-inline:20px;padding-block:20px 56px}
+.page{max-width:760px;margin-inline:auto;display:flex;flex-direction:column;gap:40px}
+h1,h2{font-family:var(--display);text-wrap:balance;margin:0}
+h2{font-size:21px;font-weight:900;display:flex;align-items:center;gap:10px}
+h2::before{content:"";width:22px;height:6px;background:var(--sun);transform:skewX(-30deg);flex:none}
+p{margin:0}
+a{color:inherit;text-underline-offset:3px;text-decoration-color:var(--sun)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--sun-text);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.small{font-size:13.5px;line-height:1.6}
+
+/* masthead */
+.mast{background:var(--sun);color:var(--onsun);padding:22px 20px 24px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
+.mast::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(118deg,transparent 0 26px,rgba(255,255,255,.22) 26px 29px);
+  -webkit-mask-image:linear-gradient(90deg,transparent 35%,#000 100%);mask-image:linear-gradient(90deg,transparent 35%,#000 100%)}
+.mast>*{position:relative;z-index:1}
+.eyebrow{font-size:13px;letter-spacing:.1em;font-weight:500}
+.mast h1{font-size:clamp(30px,7vw,46px);font-weight:900;line-height:1.15;letter-spacing:.02em}
+.lede{font-size:17.5px;line-height:1.7;max-width:32em;font-weight:500}
+.edition{font-size:12.5px;font-weight:500;align-self:flex-start;border:1.5px solid var(--onsun);padding:4px 8px}
+
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.facts div{background:var(--surface);border-top:4px solid var(--sun);padding:12px 14px 14px;min-width:0}
+.facts b{display:block;font-family:var(--figure);font-size:44px;font-weight:800;line-height:1;color:var(--sun-text)}
+.facts span{font-size:13px;color:var(--muted)}
+@media (max-width:480px){.facts{grid-template-columns:1fr}}
+
+section{display:flex;flex-direction:column;gap:16px}
+.legend{display:flex;flex-wrap:wrap;gap:18px;font-size:14px}
+.key{display:inline-flex;align-items:center;gap:7px}
+.dot{width:11px;height:11px;border-radius:50%;background:var(--jiang)}
+.sq{width:10px;height:10px;background:var(--shen)}
+
+.ranges{display:grid;gap:22px}
+.range h3{margin:0 0 8px;font-size:15px;font-weight:700}
+.row{display:grid;grid-template-columns:4.2em 1fr 5.4em;align-items:center;gap:10px;font-size:14px}
+.row b{font-family:var(--figure);font-size:20px;font-weight:600}
+.track{position:relative;height:16px;background:var(--band)}
+.fill{position:absolute;top:0;bottom:0}
+.fill.j{background:var(--jiang);border-radius:8px}
+.fill.s{background:var(--shen);transform:skewX(-20deg)}
+.mid{position:absolute;top:-4px;bottom:-4px;left:50%;border-left:1px dashed var(--ink)}
+.axis{display:grid;grid-template-columns:4.2em 1fr 5.4em;gap:10px;font-size:12px;color:var(--muted)}
+.axis div{display:flex;justify-content:space-between}
+
+.chart{overflow-x:auto;background:var(--surface);border:1px solid var(--line)}
+.chart svg{display:block;width:100%;min-width:560px;height:auto}
+.g{stroke:var(--line);stroke-width:1}
+.t{fill:var(--muted);font-family:var(--body);font-size:12px}
+.tv{fill:var(--ink);font-family:var(--figure);font-size:15px;font-weight:600}
+.jl{stroke:var(--jiang);fill:none} .sl{stroke:var(--shen);fill:none}
+.jf{fill:var(--jiang)} .sf{fill:var(--shen)}
+.hollow{fill:var(--surface);stroke-width:2}
+
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th,td{text-align:left;padding:9px 10px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:500;color:var(--muted);font-size:12.5px;white-space:nowrap}
+td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.events{list-style:none;margin:0;padding:0;display:grid}
+.events li{display:grid;grid-template-columns:5.6em 1fr;gap:6px 14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.events li>div{min-width:0}
+@media (max-width:480px){.events li{grid-template-columns:1fr}}
+.chip{display:inline-block;font-size:12px;line-height:1;padding:5px 7px;white-space:nowrap;border:1.5px solid var(--ink)}
+.chip.v{background:var(--ink);color:var(--bg)}
+.chip.i{border-style:dashed}
+.impact{font-size:13.5px;color:var(--muted)}
+
+.cal{display:grid;grid-template-columns:5em 1fr;gap:8px 14px;margin:0}
+.cal dt{font-family:var(--figure);font-size:19px;font-weight:600;color:var(--sun-text);line-height:1.5}
+.cal dd{margin:0;min-width:0}
+
+.zchart{overflow-x:auto;background:var(--surface);border:1px solid var(--line)}
+.zchart svg{display:block;width:100%;min-width:600px;height:auto}
+.arr{stroke:var(--muted);stroke-width:1.5}
+.zero{stroke:var(--ink);stroke-width:1;stroke-dasharray:3 3}
+.tl{fill:var(--ink);font-family:var(--body);font-size:13px}
+h3.sub{margin:8px 0 0;font-size:16px;font-weight:700}
+th br{display:block}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:4px;border-bottom:2px solid var(--line);padding-top:6px;margin-bottom:-16px}
+.tabs button{background:transparent;color:var(--muted);font-family:var(--body);font-size:15.5px;font-weight:700;padding:10px 14px 9px;border:0;border-bottom:3px solid transparent;margin-bottom:-2px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--sun)}
+.tabs button:hover{color:var(--ink)}
+.panel,.shared{display:flex;flex-direction:column;gap:40px}
+.jumpwrap{display:flex}
+button.jump{background:transparent;color:var(--ink);border:1.5px solid var(--ink);font-weight:700}
+.sched{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.sched{grid-template-columns:1fr}}
+.scol{background:var(--surface);border:1px solid var(--line);padding:12px 14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.scol h3{margin:0;font-size:16px;display:flex;align-items:center;gap:8px}
+.sday{display:grid;grid-template-columns:5.2em 1fr;gap:6px 10px;margin:0;font-size:14.5px}
+.sday dt{font-weight:700;font-variant-numeric:tabular-nums}
+.sday dd{margin:0;min-width:0}
+.sday dd.none{color:var(--muted)}
+.mband{fill:var(--band)}
+.mmed{stroke:var(--ink);stroke-width:2.5}
+.mp{fill:var(--ink)}
+.ma{fill:var(--surface);stroke:var(--ink);stroke-width:2}
+.mstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.mstats>div{background:var(--surface);border:1px solid var(--line);padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.mstats b{font-size:30px;line-height:1.2}
+.mstats span{color:var(--muted)}
+.twocol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.mstats,.twocol{grid-template-columns:1fr}}
+.mgrid th,.mgrid td{text-align:center}
+.mgrid th:first-child,.mgrid td:first-child{text-align:left}
+.mgrid td.cj{background:var(--p-blue-soft)}
+.mgrid td.cs{background:var(--p-orange-soft)}
+.mgrid tr.cur td{font-weight:700}
+.notes{margin:0;padding-left:1.2em;display:grid;gap:6px;font-size:14.5px}
+.notice{border-left:6px solid var(--sun);background:var(--surface);padding:14px 16px;font-size:14.5px}
+.sources{margin:0;padding-left:1.2em;font-size:13.5px;display:grid;gap:4px;overflow-wrap:anywhere}
+button{font:inherit;font-size:14px;font-weight:700;padding:10px 16px;background:var(--sun);color:var(--onsun);border:0;cursor:pointer;align-self:flex-start}
+#copytext{width:100%;box-sizing:border-box;min-height:150px;font:13px/1.6 var(--body);background:var(--surface);color:var(--ink);border:1px solid var(--line);padding:10px}
+</style>
+
+<div class="page">
+<header class="mast">
+  <div class="eyebrow">2026-10-12 晚上 · 距投票 47 天</div>
+  <h1>台北市長選情簡報</h1>
+  <p class="lede">TVBS、三立邀兩陣營協商首場電視辯論,同意納入交叉詰問,但日期未定(主辦提 10/31、沈方提 10/24);另有五家媒體聯合邀第二場。本時段無新民調,預測維持。</p>
+  <span class="edition">洋流配色版 · 內容與中性版相同 · 非任何陣營文宣</span>
+</header>
+
+<div class="facts">
+  <div><b class="num">47</b><span>天後投票(11/28)</span></div>
+  <div><b class="num">8</b><span>TVBS 最新差距,單位百分點(5 月為 28)</span></div>
+  <div><b class="num">11%</b><span>TVBS 民調中尚未決定者</span></div>
+</div>
+
+<nav class="tabs" role="tablist" aria-label="簡報分頁">
+  <button type="button" role="tab" id="tab-brief" aria-controls="panel-brief" aria-selected="true">選情動態</button>
+  <button type="button" role="tab" id="tab-polls" aria-controls="panel-polls" aria-selected="false" tabindex="-1">民調與分區分析</button>
+</nav>
+
+<div class="panel" id="panel-brief" role="tabpanel" aria-labelledby="tab-brief">
+<section>
+  <h2>大事件(10/12)</h2>
+  <p class="small muted">本時段(10/12 08:22–20:20)四則新事件,依影響排序;下方保留前次收錄的主要事件。</p>
+  <ul class="events">
+    <li><span><span class="chip">各方說法</span></span><div><b>首場電視辯論日期未定。</b>TVBS、三立 10/12 下午邀兩陣營協商逾一小時,雙方同意納入交叉詰問,但首場日期與總場次沒有共識。主辦單位提 10/31;蔣萬安陣營表示同意,並批評沈伯洋陣營「把辯論當成叫陣工具」。沈陣營發言人蔡一愷表示可提前到 10/24,並主張至少四場。中時引述蔣陣營說法,稱沈陣營要求先確定總場次,並提議兩天後再談。<div class="impact">影響:高。辯論是中立選民少數能同台比較兩人的場合;日期與場次之爭本身影響有限,延宕愈久,辯論能發揮作用的時間愈短。</div></div></li>
+    <li><span><span class="chip v">已查證</span></span><div><b>五家媒體聯合邀第二場辯論。</b>自由時報、中視、台視、民視、鏡電視發布聯合聲明,邀兩人參加辯論;中央社報導沈伯洋已簽意向書。蔣萬安上午受訪表示「大家依照慣例,我們就舉辦 1 場」;壹蘋、Newtalk 報導蔣陣營在協商會後表示將參加這場辯論,尚未見蔣本人直接說明。<div class="impact">影響:中。若成局,兩場辯論加上兩場公辦政見會,將是投票前主要的同台機會。</div></div></li>
+    <li><span><span class="chip v">已查證</span></span><div><b>蔣萬安將上黃國昌、趙少康節目。</b>民眾黨主席黃國昌 10/12 宣布本週四(10/15)專訪蔣萬安,蔣表示「都可以談」,將說明四年施政與願景。另有報導指蔣 10/19 接受趙少康專訪(各方說法)。<div class="impact">影響:中。對象是民眾黨支持者與上屆黃珊珊選民;TVBS 10 月顯示後者 53% 支持沈、39% 支持蔣,是兩方都在爭取的群體。</div></div></li>
+    <li><span><span class="chip v">已查證</span></span><div><b>「台北大洋流」第二站公布。</b>沈伯洋競選官網列出第二站為 10/18(日)17:30–20:30,松山、信義。<div class="impact">影響:低。松山信義是兩家民調都偏蔣的分區。</div></div></li>
+  </ul>
+  <h3 class="sub">前次收錄的主要事件(10/11–10/12 早)</h3>
+  <ul class="events">
+    <li><span><span class="chip v">已查證</span></span><div><b>TVBS 與三立宣布合辦電視辯論。</b>兩台 10/11 晚間宣布聯合舉辦台北市長候選人電視辯論,邀請蔣萬安、沈伯洋。沈伯洋表示希望越早越好;蔣萬安表示會全力以赴說明政見。<div class="impact">影響:高。後續協商結果見上方。</div></div></li>
+    <li><span><span class="chip v">已查證</span></span><div><b>沈伯洋首場車隊掃街。</b>路線為中山、大同區,終點提出該區五項政見。交管單位統計跟隨車輛逾兩千輛;有民眾抱怨塞車,沈在社群致歉。<div class="impact">影響:中。顯示動員能量,但地點是他在民調中已領先的區域。</div></div></li>
+    <li><span><span class="chip">各方說法</span></span><div><b>國家認同攻防。</b>蔣萬安要求沈伯洋說明對中華民國的立場;沈回應這是中華民國從威權走向民主的轉變。<div class="impact">影響:低至中。有助雙方鞏固基本盤,對中立選民的方向無法判斷。</div></div></li>
+    <li><span><span class="chip">各方說法</span></span><div><b>游錫堃談蔣萬安身世。</b>游以「認養阿公」形容;蔣競選辦公室批評為負面選戰,並問沈是否認同。<div class="impact">影響:低至中。</div></div></li>
+    <li><span><span class="chip">各方說法</span></span><div><b>「造謠」之爭。</b>蔣萬安稱對手造謠,舉營養午餐、路樹、雙城論壇三例要求道歉;沈伯洋要求具體說明,並追問樹木、營養午餐與兒虐問題。<div class="impact">影響:低。</div></div></li>
+  </ul>
+  <p class="small muted">網路討論:本時段新聞側的主要方向是辯論日期與場次之爭,以及雙方上政論節目專訪。聲量不等於好感,平台使用者偏年輕;本次僅從新聞報導側觀察。</p>
+</section>
+
+<section id="schedule">
+  <h2>未來兩天公開行程</h2>
+  <p class="small muted">更新於 10/12 20:30。兩位候選人用同一套標準:只列已公開預告的行程,查不到就寫「尚未公布」。早上的更新列今天與明天,晚上的更新列明天與後天。</p>
+  <div class="sched">
+    <div class="scol">
+      <h3><i class="dot"></i>蔣萬安</h3>
+      <dl class="sday">
+        <dt>10/13(二)</dt><dd class="none">尚未查到已公布的公開行程</dd>
+        <dt>10/14(三)</dt><dd class="none">尚未查到已公布的公開行程</dd>
+      </dl>
+      <p class="small muted">目前沒有競選官網行程頁;以市府公告與媒體預告為準。兩天之後已預告:10/15(四)黃國昌節目專訪(聯合報、三立報導),10/19 趙少康專訪(各方說法),時間均未公布。</p>
+    </div>
+    <div class="scol">
+      <h3><i class="sq"></i>沈伯洋</h3>
+      <dl class="sday">
+        <dt>10/13(二)</dt><dd class="none">官網行程頁尚未列出</dd>
+        <dt>10/14(三)</dt><dd>時間未公布 中廣|趙少康節目第二次專訪 <span class="chip">各方說法</span>(三立、今周刊報導;官網行程頁未列)</dd>
+      </dl>
+      <p class="small muted">來源:<a href="https://puma.taipei/schedule">競選官網行程頁</a>。「台北大洋流」車掃共六場,官網已公布第二站 10/18(日)松山、信義。</p>
+    </div>
+  </div>
+  <p class="small"><span class="chip">各方說法</span> 兩陣營共同:首場電視辯論日期待再協商,沈陣營提議約兩天後再談(中時引述蔣陣營說法),時間未公布。</p>
+</section>
+
+<section>
+  <h2>未來觀察</h2>
+  <h3 class="sub">關鍵日期</h3>
+  <dl class="cal">
+    <dt>10/14</dt><dd>沈伯洋上中廣趙少康節目第二次專訪(三立、今周刊報導)</dd>
+    <dt>10/15</dt><dd>蔣萬安上黃國昌節目專訪</dd>
+    <dt>10/18</dt><dd>沈伯洋「台北大洋流」第二站:松山、信義</dd>
+    <dt>10/19</dt><dd>蔣萬安接受趙少康專訪(各方說法)</dd>
+    <dt>10/23</dt><dd>候選人號次抽籤</dd>
+    <dt>10/24</dt><dd>沈陣營提議的首場辯論日期(未定案)</dd>
+    <dt>10/26</dt><dd>蔣萬安競選總部成立</dd>
+    <dt>10/31</dt><dd>TVBS、三立提議的首場辯論日期(蔣陣營同意,沈陣營未定案)</dd>
+    <dt>11/12</dt><dd>公告直轄市長候選人名單</dd>
+    <dt>11/18</dt><dd>民調封關開始,此後不得發布民調</dd>
+    <dt>11/28</dt><dd>投票</dd>
+  </dl>
+  <p class="small muted">首場辯論由 TVBS、三立合辦,日期未定;五家媒體另邀第二場。公辦政見發表會日期尚未確定。</p>
+  <h3 class="sub">可能改變局勢的三件事</h3>
+  <ul class="notes">
+    <li>首場辯論能否敲定日期與總場次,以及交叉詰問中的表現</li>
+    <li>下一份非 TVBS 的高品質民調,是否確認差距持續收窄</li>
+    <li>中立選民與上屆黃珊珊選民的流向(蔣 10/15 上黃國昌節目是觀察點)</li>
+  </ul>
+</section>
+
+<div class="jumpwrap"><button type="button" class="jump" data-goto="polls">看預測、民調走勢與 12 區分析 →</button></div>
+</div>
+
+<div class="panel" id="panel-polls" role="tabpanel" aria-labelledby="tab-polls" hidden>
+<div class="legend">
+  <span class="key"><i class="dot"></i>蔣萬安(國民黨,現任)</span>
+  <span class="key"><i class="sq"></i>沈伯洋(民進黨)</span>
+</div>
+
+<section>
+  <h2>目前預測</h2>
+  <p class="small muted"><span class="chip i">推論</span> 10/11 建立基線,以區間表示,不給單點數字。另有四位候選人登記,合計預估 1–2%。</p>
+  <div class="ranges">
+    <div class="range">
+      <h3>當選機率</h3>
+      <div class="row"><span>蔣萬安</span><div class="track"><i class="fill j" style="left:60%;width:15%"></i><i class="mid"></i></div><b class="num">60–75%</b></div>
+      <div class="row" style="margin-top:8px"><span>沈伯洋</span><div class="track"><i class="fill s" style="left:25%;width:15%"></i><i class="mid"></i></div><b class="num">25–40%</b></div>
+      <div class="axis"><span></span><div><span>0</span><span>50</span><span>100%</span></div><span></span></div>
+    </div>
+    <div class="range">
+      <h3>預估得票率</h3>
+      <div class="row"><span>蔣萬安</span><div class="track"><i class="fill j" style="left:50%;width:25%"></i><i class="mid"></i></div><b class="num">50–55%</b></div>
+      <div class="row" style="margin-top:8px"><span>沈伯洋</span><div class="track"><i class="fill s" style="left:20%;width:25%"></i><i class="mid"></i></div><b class="num">44–49%</b></div>
+      <div class="axis"><span></span><div><span>40</span><span>50(過半)</span><span>60%</span></div><span></span></div>
+    </div>
+  </div>
+  <p class="small">投票率假設 66–72%(2018 年 65.95%、2022 年 67.70%;TVBS 預估 71%)。</p>
+</section>
+
+<!--MODEL:START-->
+<section id="model">
+  <h2>模型與關鍵條件</h2>
+  <p class="small muted"><span class="chip i">推論</span> 模型 v0,2026-10-12 計算,模擬 20,000 次。以下數字都是沈伯洋的「二黨得票率」(蔣 + 沈 = 100),蔣萬安 = 100 減去該值。</p>
+
+  <p>兩種讀法得到相反的結論。<b>民調直讀</b>:近期民調加權後,沈 46.2%。<b>票流重建</b>:把民調測到的「2022 投票對象 → 2026 支持」比例,套到 2022 年的實際得票上,沈 53.3%。兩者的落差來自民調樣本:TVBS 10 月受訪者自稱 2022 年投蔣的占 47%、投黃珊珊的占 15%,但 2022 年實際得票是蔣 42.3%、黃 25.1%。</p>
+  <p>這個落差有兩種解釋。如果是<b>抽樣偏差</b>(民調多訪到 2022 年的蔣選民),民調低估了沈;如果是<b>回憶偏差</b>(受訪者傾向說自己投給當選人),民調本身沒錯。模型用 λ 表示前者占的比例,目前假設平均 0.4,這是判斷,不是數據。</p>
+
+  <div class="zchart"><svg viewBox="0 0 760 150" role="img" aria-label="沈伯洋二黨得票率:民調直讀 46.2%,票流重建 53.3%,模型中位數 49.1%,80% 區間 44.2–53.9%">
+    <line class="g" x1="60.0" x2="60.0" y1="40" y2="118"/><text class="t" x="60.0" y="136" text-anchor="middle">40</text><line class="g" x1="220.0" x2="220.0" y1="40" y2="118"/><text class="t" x="220.0" y="136" text-anchor="middle">45</text><line class="g" x1="540.0" x2="540.0" y1="40" y2="118"/><text class="t" x="540.0" y="136" text-anchor="middle">55</text><line class="g" x1="700.0" x2="700.0" y1="40" y2="118"/><text class="t" x="700.0" y="136" text-anchor="middle">60</text>
+    <line class="zero" x1="380.0" x2="380.0" y1="30" y2="122"/>
+    <text class="tl" x="380.0" y="22" text-anchor="middle" font-weight="700">50%(過半)</text>
+    <text class="t" x="380.0" y="136" text-anchor="middle">50</text>
+    <rect class="mband" x="194.4" y="66" width="310.4" height="22"/>
+    <line class="mmed" x1="351.2" x2="351.2" y1="60" y2="94"/>
+    <text class="tv" x="351.2" y="110" text-anchor="middle">模型 49.1</text>
+    <circle class="mp" cx="258.4" cy="48" r="6"/>
+    <text class="tl" x="258.4" y="40" text-anchor="middle">民調直讀 46.2</text>
+    <rect class="ma" x="479.6" y="42" width="12" height="12" transform="rotate(45 485.6 48)"/>
+    <text class="tl" x="485.6" y="40" text-anchor="middle">票流重建 53.3</text>
+    <text class="t" x="60" y="22">← 蔣領先</text>
+    <text class="t" x="700" y="22" text-anchor="end">沈領先 →</text>
+  </svg></div>
+  <p class="small muted">圓點為民調直讀,菱形為票流重建,色帶為模型的 80% 區間,直線為中位數。</p>
+
+  <div class="mstats">
+    <div><span>蔣萬安勝率</span><b class="num">59%</b><span class="small">二黨得票率 80% 區間 46.1–55.8%</span></div>
+    <div><span>沈伯洋勝率</span><b class="num">41%</b><span class="small">二黨得票率 80% 區間 44.2–53.9%</span></div>
+    <div><span>λ 的臨界值</span><b class="num">0.53</b><span class="small">λ 高於此值,中央情境變成沈領先</span></div>
+  </div>
+
+  <h3 class="sub">勝負取決於什麼</h3>
+  <p class="small muted">下表只換兩個參數,其餘取中央值。格內為沈的二黨得票率;藍底為蔣領先,橘底為沈領先。</p>
+  <div class="tablewrap"><table class="mgrid">
+    <thead><tr><th>黃珊珊 2022 選民<br>投沈的比例</th><th>λ = 0</th><th>λ = 0.25</th><th>λ = 0.5</th><th>λ = 0.75</th><th>λ = 1</th></tr></thead>
+    <tbody><tr><td>35%</td><td class="n cj">46.2</td><td class="n cj">46.8</td><td class="n cj">47.3</td><td class="n cj">47.8</td><td class="n cj">48.3</td></tr><tr><td>45%</td><td class="n cj">46.2</td><td class="n cj">47.3</td><td class="n cj">48.4</td><td class="n cj">49.5</td><td class="n cs">50.5</td></tr><tr class="cur"><td>58%(目前)</td><td class="n cj">46.2</td><td class="n cj">48.0</td><td class="n cj">49.8</td><td class="n cs">51.5</td><td class="n cs">53.3</td></tr><tr><td>65%</td><td class="n cj">46.2</td><td class="n cj">48.4</td><td class="n cs">50.6</td><td class="n cs">52.7</td><td class="n cs">54.9</td></tr></tbody></table></div>
+  <div class="twocol">
+    <div class="scol"><h3><i class="dot"></i>蔣萬安維持領先的條件</h3><ul class="notes">
+      <li>民調組成落差主要是回憶偏差(λ 低於 0.53)</li>
+      <li>或黃珊珊 2022 選民回到 5 月的流向(約三成五投沈):此時即使 λ = 1,沈也只有 48.3%</li>
+    </ul></div>
+    <div class="scol"><h3><i class="sq"></i>沈伯洋超前的條件</h3><ul class="notes">
+      <li>民調組成落差有一半以上是抽樣偏差(λ 高於 0.53)</li>
+      <li>黃珊珊 2022 選民投沈的比例再升到 65%:此時 λ 只要約 0.5,沈就到 50.6%</li>
+    </ul></div>
+  </div>
+  <p class="small"><b>怎麼判斷 λ:</b>下一份公布「2022 投票對象」組成的民調,若組成接近實際結果(蔣 42、陳 32、黃 25)而蔣仍領先,代表 λ 偏低;若組成接近實際後差距明顯縮小,代表 λ 偏高。手機與市話並用的雙底冊民調,比純市話民調更能回答這個問題。</p>
+  <p class="small"><b>投票率影響不大:</b>投票率從 66% 到 74%,λ = 0.5 時沈的二黨得票率只從 49.5% 變到 50.0%。2022 年未投票者支持沈的比例較高(二黨 61.2%),但新增投票者只占約 13%。</p>
+
+  <h3 class="sub">回測:過去民調的誤差</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>選舉</th><th>民調</th><th>距投票</th><th>各候選人誤差(未決定依比例分配後,點)</th><th>前兩名差距誤差</th></tr></thead>
+    <tbody><tr><td>2022</td><td>TVBS 10/27–30</td><td class="n">28 天</td><td>蔣萬安 +1.2、陳時中 -0.2、黃珊珊 -0.4</td><td class="n">+1.4</td></tr><tr><td>2018</td><td>TVBS 9/12–14</td><td class="n">75 天</td><td>柯文哲 +5.2、丁守中 -0.8、姚文智 -3.5</td><td class="n">+6.0</td></tr><tr><td>2018</td><td>蘋果日報(11/9 刊出)</td><td class="n">15 天</td><td>柯文哲 +5.9、丁守中 +2.4、姚文智 -7.5</td><td class="n">+3.5</td></tr></tbody></table></div>
+  <p class="small muted">2022 年 TVBS 選前一個月的民調,未決定者依比例分配後幾乎完全命中;2018 年兩份民調都高估柯文哲、低估民進黨的姚文智。本模型的民調系統誤差設為二黨得票率 ±2.5 點(一個標準差),另加選前變動 ±2.0 點。</p>
+
+  <h3 class="sub">限制</h3>
+  <ul class="notes">
+    <li>票流比例來自單一民調的子樣本(黃珊珊選民約 170 人),誤差大;陳時中選民投蔣的比例、2022 未投票者人數為假設值。</li>
+    <li>假設各組選民的重返投票率相同;實際上兩陣營動員能力可能不同。</li>
+    <li>分區估計結合 2022 結構與兩家民調的分區數字,單一行政區的不確定性很大,只看方向。</li>
+    <li>可回測的台北市長選舉只有兩次,模型參數無法用歷史資料嚴格校準。</li>
+  </ul>
+</section>
+<!--MODEL:END-->
+
+<section>
+  <h2>民調走勢</h2>
+  <p class="small muted">虛線連接同一機構(TVBS)的兩次調查,這是最可靠的比較。直線為各民調的抽樣誤差範圍。</p>
+  <div class="chart">
+  <svg viewBox="0 0 720 320" role="img" aria-label="四份民調的支持度:TVBS 5 月 58 比 30,震傳媒 6 月 55.2 比 27.5,信民協會 9 月 41.7 比 40.5,TVBS 10 月 49 比 41">
+    <line class="g" x1="48" x2="690" y1="50" y2="50"/><line class="g" x1="48" x2="690" y1="110" y2="110"/>
+    <line class="g" x1="48" x2="690" y1="170" y2="170"/><line class="g" x1="48" x2="690" y1="230" y2="230"/>
+    <line class="g" x1="48" x2="690" y1="290" y2="290"/>
+    <text class="t" x="40" y="54" text-anchor="end">60%</text><text class="t" x="40" y="114" text-anchor="end">50</text>
+    <text class="t" x="40" y="174" text-anchor="end">40</text><text class="t" x="40" y="234" text-anchor="end">30</text>
+    <text class="t" x="40" y="294" text-anchor="end">20</text>
+    <text class="t" x="119" y="308" text-anchor="middle">6 月</text><text class="t" x="245" y="308" text-anchor="middle">7 月</text>
+    <text class="t" x="375" y="308" text-anchor="middle">8 月</text><text class="t" x="505" y="308" text-anchor="middle">9 月</text>
+    <text class="t" x="631" y="308" text-anchor="middle">10 月</text>
+    <line class="jl" x1="85.8" y1="62" x2="648" y2="116" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <line class="sl" x1="85.8" y1="230" x2="648" y2="164" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <line class="jl" x1="85.8" x2="85.8" y1="42.2" y2="81.8" stroke-width="2"/><line class="sl" x1="85.8" x2="85.8" y1="210.2" y2="249.8" stroke-width="2"/>
+    <line class="jl" x1="568" x2="568" y1="141.8" y2="177.8" stroke-width="2"/><line class="sl" x1="578" x2="578" y1="149" y2="185" stroke-width="2"/>
+    <line class="jl" x1="648" x2="648" y1="98.6" y2="133.4" stroke-width="2"/><line class="sl" x1="648" x2="648" y1="146.6" y2="181.4" stroke-width="2"/>
+    <circle class="jf" cx="85.8" cy="62" r="5.5"/><rect class="sf" x="80.8" y="225" width="10" height="10"/>
+    <line class="jl" x1="215.8" x2="215.8" y1="60.9" y2="96.7" stroke-width="2"/><line class="sl" x1="215.8" x2="215.8" y1="227.1" y2="262.9" stroke-width="2"/>
+    <circle class="jf" cx="215.8" cy="78.8" r="5.5"/><rect class="sf" x="210.8" y="240" width="10" height="10"/>
+    <circle class="jf" cx="568" cy="159.8" r="5.5"/><rect class="sf" x="573" y="162" width="10" height="10"/>
+    <circle class="jf" cx="648" cy="116" r="5.5"/><rect class="sf" x="643" y="159" width="10" height="10"/>
+    <text class="tv" x="97" y="67">58</text><text class="tv" x="97" y="235">30</text>
+    <text class="tv" x="227" y="84">55.2</text><text class="tv" x="227" y="250">27.5</text>
+    <text class="tv" x="558" y="159" text-anchor="end">41.7</text><text class="tv" x="558" y="182" text-anchor="end">40.5</text>
+    <text class="tv" x="661" y="121">49</text><text class="tv" x="661" y="169">41</text>
+    <text class="t" x="85.8" y="32" text-anchor="middle">TVBS</text>
+    <text class="t" x="215.8" y="278" text-anchor="middle">震傳媒</text>
+    <text class="t" x="573" y="130" text-anchor="middle">信民協會</text>
+    <text class="t" x="648" y="88" text-anchor="middle">TVBS</text>
+  </svg>
+  </div>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>機構</th><th>調查期間</th><th>樣本與方法</th><th>蔣</th><th>沈</th><th>未決定</th><th>備註</th></tr></thead>
+    <tbody>
+      <tr><td>TVBS</td><td class="n">10/3、10/5–7</td><td>1,120,市話,±2.9</td><td class="n">49</td><td class="n">41</td><td class="n">11</td><td>媒體自辦</td></tr>
+      <tr><td>信民協會委託</td><td class="n">9/16–18</td><td>1,076,市話加手機,±3.0</td><td class="n">41.7</td><td class="n">40.5</td><td class="n">約 18</td><td>樣本政黨傾向有爭議,權重減半</td></tr>
+      <tr><td>震傳媒</td><td class="n">6/21–22</td><td>1,074,市話,±2.99</td><td class="n">55.2</td><td class="n">27.5</td><td class="n">約 17(推算)</td><td>震傳媒出資,山水民意研究執行</td></tr>
+      <tr><td>TVBS</td><td class="n">5/21–26</td><td>901,市話,±3.3</td><td class="n">58</td><td class="n">30</td><td class="n">13</td><td>媒體自辦</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="sub" id="poll-disclosure">民調資訊揭露</h3>
+  <p class="small muted">依《公職人員選舉罷免法》第 52 條,本頁引述的本屆選舉民調均列出以下項目。查不到經費來源或委託單位的民調,本頁不引述,也不納入模型。</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>民調</th><th>調查單位/主持人</th><th>辦理時間</th><th>抽樣方式</th><th>母體</th><th>樣本數</th><th>誤差值</th><th>經費來源</th></tr></thead>
+    <tbody>
+      <tr><td>TVBS 10 月</td><td>TVBS 民意調查中心</td><td class="n">2026/10/3、10/5–7 晚間</td><td>市內電話號碼後四碼隨機抽樣,人員電話訪問</td><td>20 歲以上台北市民</td><td class="n">1,120</td><td class="n">±2.9(95% 信心水準)</td><td>TVBS</td></tr>
+      <tr><td>信民協會 9 月</td><td>委託:台北市信民兩岸研究協會;問卷設計與分析:戴立安;執行:畢肯市場研究公司</td><td class="n">2026/9/16–18</td><td>住宅電話 752 人、行動電話 324 人(雙底冊)</td><td>設籍台北市、年滿 20 歲民眾</td><td class="n">1,076</td><td class="n">±3.0(95% 信心水準)</td><td>台北市信民兩岸研究協會</td></tr>
+      <tr><td>震傳媒 6 月</td><td>執行:山水民意研究股份有限公司</td><td class="n">2026/6/21–22</td><td>住宅電話系統抽樣加尾 2 碼隨機,CATI 電話訪問</td><td>設籍台北市、年滿 20 歲民眾</td><td class="n">1,074</td><td class="n">±2.99(95% 信心水準)</td><td>震傳媒</td></tr>
+      <tr><td>TVBS 5 月</td><td>TVBS 民意調查中心</td><td class="n">2026/5/21–26 晚間</td><td>市內電話號碼後四碼隨機抽樣,人員電話訪問</td><td>20 歲以上台北市民</td><td class="n">901</td><td class="n">±3.3(95% 信心水準)</td><td>TVBS</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small muted">模型回測使用的 2018、2022 年民調屬於過去的選舉,只用來檢驗誤差,不是本屆民調。</p>
+  <p class="small"><span class="chip i">推論</span> 加權平均(TVBS 10 月權重 1.0、信民 0.5):蔣 46.6、沈 40.8,差距約 5.7 點。</p>
+  <p class="small"><span class="chip v">已查證</span> TVBS 10 月民調細項:中立選民為蔣 40、沈 36、未決定 24;上屆投給黃珊珊的選民為沈 53、蔣 39;看好度為蔣 55、沈 20。</p>
+  <p class="small muted">校準參考:2022 年 TVBS 10 月底民調顯示蔣領先 10 點,實際領先 10.4 點;2018 年的回測見「模型與關鍵條件」。</p>
+
+  <div class="comment">
+    <p class="small"><span class="chip">各方說法</span> <b>矢板明夫俱樂部對信民民調的解讀</b>(臉書,9/22)</p>
+    <ul class="notes">
+      <li>兩人只差 1.2 點,已在誤差範圍內;沈伯洋過去支持率偏低,主因是知名度不足。</li>
+      <li>支持度從 30% 到 40% 可以靠基本盤回流;從 40% 到 50% 要爭取中間選民與無黨籍選民,難度高得多。</li>
+      <li>不應低估蔣萬安:現任者有行政資源、施政曝光度與完整的組織動員能力。</li>
+      <li>信民民調的「看好誰當選」仍是蔣大幅領先,貼文認為聲勢還沒轉化為選民對勝負的預期。本簡報補充:TVBS 10 月同題為蔣 55%、沈 20%,方向一致。</li>
+      <li>選前資訊戰會加劇,匿名爆料與剪接影片應先查證來源。</li>
+    </ul>
+  </div>
+</section>
+
+<section id="districts">
+  <h2>分區分析</h2>
+  <p class="small muted">分區樣本小,誤差大。TVBS 每個分區約 130–240 人,單一候選人支持度的誤差約 ±6–9 點;信民協會的單一行政區只有 50–120 人,誤差約 ±9–14 點。請看方向,不要看個位數的差距。</p>
+
+  <style>
+  :root{--p-blue:#1E4FA0;--p-blue-soft:#D6E1F3;--p-green:#1D7A43;--p-orange:#EE7316;--p-orange-soft:#FBE0C9;--p-on-dark:#FFFFFF;--p-on-orange:#1E1A17;--p-on-soft:#1E1A17;--p-key:#E4E7E6}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){--p-blue:#3F74C9;--p-blue-soft:#22324A;--p-green:#237F49;--p-orange:#F08030;--p-orange-soft:#4A2D17;--p-on-soft:#EDE6E0;--p-key:#2A302E} }
+  :root[data-theme="dark"]{--p-blue:#3F74C9;--p-blue-soft:#22324A;--p-green:#237F49;--p-orange:#F08030;--p-orange-soft:#4A2D17;--p-on-soft:#EDE6E0;--p-key:#2A302E}
+  .dmap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+  .tile{background:var(--surface);border:1px solid var(--line);padding:6px;display:flex;flex-direction:column;gap:3px;min-width:0}
+  .tile b{font-size:14px;line-height:1.4}
+  .tile.key{background:transparent;border-style:dashed}
+  .st{display:block;font-size:11.5px;line-height:1;padding:4px 5px;white-space:nowrap;overflow:hidden;font-variant-numeric:tabular-nums}
+  .st.b{background:var(--p-blue);color:var(--p-on-dark)}
+  .st.g{background:var(--p-green);color:var(--p-on-dark)}
+  .st.o{background:var(--p-orange);color:var(--p-on-orange)}
+  .st.bs{background:var(--p-blue-soft);color:var(--p-on-soft);outline:1.5px dashed var(--p-blue);outline-offset:-1.5px}
+  .st.os{background:var(--p-orange-soft);color:var(--p-on-soft);outline:1.5px dashed var(--p-orange);outline-offset:-1.5px}
+  .st.k{background:var(--p-key);color:var(--ink)}
+  .dlegend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px}
+  .dlegend span{display:inline-flex;align-items:center;gap:6px}
+  .dlegend i{display:inline-block;width:22px;height:12px}
+  .comment{background:var(--surface);border:1px solid var(--line);padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+  </style>
+
+  <h3 class="sub">12 個行政區:2022 誰贏、現在誰領先</h3>
+  <p class="small muted">示意圖,依行政區大致方位排列。每格由上到下四條:2022 實際結果、信民協會 9 月(單一行政區)、TVBS 10 月(兩區合併的分區)、本頁模型的估計(實色代表模型有八成以上把握)。</p>
+  <div class="dmap" role="img" aria-label="12 個行政區色塊圖,詳細數字見下方表格">
+    <div class="tile" style="grid-area:1/1"><b>北投</b><span class="st b">蔣 +3.9</span><span class="st bs">蔣 +8.5</span><span class="st os">沈 +11</span><span class="st o" data-model="北投">沈 +8</span></div>
+    <div class="tile" style="grid-area:1/2"><b>士林</b><span class="st b">蔣 +0.3</span><span class="st os">沈 +15.2</span><span class="st os">沈 +11</span><span class="st o" data-model="士林">沈 +15</span></div>
+    <div class="tile" style="grid-area:1/3"><b>內湖</b><span class="st b">蔣 +11.0</span><span class="st os">沈 +5.9</span><span class="st bs">蔣 +7</span><span class="st os" data-model="內湖">沈 +1</span></div>
+    <div class="tile key" style="grid-area:1/4"><b>圖例</b><span class="st k">2022 實際</span><span class="st k">信民 9月</span><span class="st k">TVBS 10月</span><span class="st k">模型估計</span></div>
+    <div class="tile" style="grid-area:2/1"><b>大同</b><span class="st g">陳 +7.3</span><span class="st bs">蔣 +15.8</span><span class="st o">沈 +19</span><span class="st o" data-model="大同">沈 +14</span></div>
+    <div class="tile" style="grid-area:2/2"><b>中山</b><span class="st b">蔣 +8.5</span><span class="st os">沈 +11.3</span><span class="st o">沈 +19</span><span class="st o" data-model="中山">沈 +16</span></div>
+    <div class="tile" style="grid-area:2/3"><b>松山</b><span class="st b">蔣 +14.6</span><span class="st bs">蔣 +16.5</span><span class="st b">蔣 +25</span><span class="st b" data-model="松山">蔣 +17</span></div>
+    <div class="tile" style="grid-area:2/4"><b>南港</b><span class="st b">蔣 +10.5</span><span class="st os">沈 +4.5</span><span class="st bs">蔣 +7</span><span class="st bs" data-model="南港">平手</span></div>
+    <div class="tile" style="grid-area:3/1"><b>萬華</b><span class="st b">蔣 +6.1</span><span class="st os">沈 +10.7</span><span class="st b">蔣 +27</span><span class="st bs" data-model="萬華">蔣 +8</span></div>
+    <div class="tile" style="grid-area:3/2"><b>中正</b><span class="st b">蔣 +13.0</span><span class="st os">沈 +1.2</span><span class="st b">蔣 +27</span><span class="st b" data-model="中正">蔣 +12</span></div>
+    <div class="tile" style="grid-area:3/3"><b>大安</b><span class="st b">蔣 +16.2</span><span class="st os">沈 +1.1</span><span class="st b">蔣 +18</span><span class="st b" data-model="大安">蔣 +8</span></div>
+    <div class="tile" style="grid-area:3/4"><b>信義</b><span class="st b">蔣 +15.4</span><span class="st b">蔣 +24.0</span><span class="st b">蔣 +25</span><span class="st b" data-model="信義">蔣 +20</span></div>
+    <div class="tile" style="grid-area:4/3"><b>文山</b><span class="st b">蔣 +22.9</span><span class="st bs">蔣 +7.4</span><span class="st b">蔣 +18</span><span class="st b" data-model="文山">蔣 +12</span></div>
+  </div>
+  <div class="dlegend">
+    <span><i style="background:var(--p-blue)"></i>藍:蔣萬安(國民黨)勝出或領先</span>
+    <span><i style="background:var(--p-green)"></i>綠:陳時中(民進黨,2022)勝出</span>
+    <span><i style="background:var(--p-orange)"></i>橘:沈伯洋(民進黨)領先</span>
+    <span><i style="background:var(--p-blue-soft);outline:1.5px dashed var(--p-blue);outline-offset:-1.5px"></i>淡色虛框:領先幅度在誤差內,只代表方向</span>
+  </div>
+  <p class="small muted">2022 數字為第一名領先第二名的百分點(內湖的第二名是黃珊珊,其餘為陳時中)。誤差判斷以兩人差距的 95% 信心區間計算;TVBS 分區樣本數未公布,以 5 月分區占比估算。</p>
+  <ul class="notes">
+    <li><span class="chip v">已查證</span> 2022 年蔣萬安贏得 12 區中的 11 區,只有大同區由陳時中領先。</li>
+    <li><span class="chip i">推論</span> 信民 9 月有 7 區顯示沈領先、5 區蔣領先,但 12 區中只有信義區的領先超過誤差;單一行政區樣本太小,這一列只能看方向。</li>
+    <li><span class="chip i">推論</span> TVBS 10 月有 6 區落在蔣領先超過誤差的分區(中正、萬華、松山、信義、大安、文山),2 區落在沈領先超過誤差的分區(中山、大同),其餘 4 區在誤差內。</li>
+    <li><span class="chip i">推論</span> 兩家民調在士林、中山都是橘色;在信義、松山、文山都是藍色。萬華、中正、大安、北投、內湖、南港、大同兩家顏色相反,是目前最不確定的地方。</li>
+  </ul>
+
+
+  <h3 class="sub">TVBS 同機構:各分區領先幅度,5 月 → 10 月</h3>
+  <p class="small muted">數值為蔣萬安減沈伯洋的百分點。空心為 5 月下旬,實心為 10 月上旬;圓形代表蔣領先,方形代表沈領先。</p>
+  <div class="zchart">
+  <svg viewBox="0 0 760 326" role="img" aria-label="TVBS 各分區領先幅度變化:全市 蔣+28 到 +8;中正萬華 +40 到 +27;松山信義 +36 到 +25;大安文山 +31 到 +18;內湖南港 +38 到 +7;士林北投 +25 到 沈+11;中山大同 沈+4 到 沈+19">
+    <text class="t" x="203.6" y="22" text-anchor="middle">沈 +20</text>
+    <text class="t" x="337.9" y="22" text-anchor="middle">平手</text>
+    <text class="t" x="472.1" y="22" text-anchor="middle">蔣 +20</text>
+    <text class="t" x="606.4" y="22" text-anchor="middle">蔣 +40</text>
+    <text class="t" x="650" y="22">5月 → 10月</text>
+    <text class="t" x="752" y="22" text-anchor="end">變化</text>
+    <line class="g" x1="203.6" x2="203.6" y1="34" y2="312"/>
+    <line class="g" x1="472.1" x2="472.1" y1="34" y2="312"/>
+    <line class="g" x1="606.4" x2="606.4" y1="34" y2="312"/>
+    <line class="zero" x1="337.9" x2="337.9" y1="34" y2="312"/>
+    <line class="g" x1="20" x2="752" y1="78" y2="78"/>
+
+    <text class="tl" x="150" y="60" text-anchor="end" font-weight="700">全市</text>
+    <line class="arr" x1="525.9" y1="56" x2="391.6" y2="56"/>
+    <circle class="jl hollow" cx="525.9" cy="56" r="5.5"/><circle class="jf" cx="391.6" cy="56" r="6"/>
+    <text class="t" x="650" y="60">+28 → +8</text><text class="tv" x="752" y="60" text-anchor="end">−20</text>
+
+    <text class="tl" x="150" y="106" text-anchor="end">中正萬華</text>
+    <line class="arr" x1="606.4" y1="102" x2="519.1" y2="102"/>
+    <circle class="jl hollow" cx="606.4" cy="102" r="5.5"/><circle class="jf" cx="519.1" cy="102" r="6"/>
+    <text class="t" x="650" y="106">+40 → +27</text><text class="tv" x="752" y="106" text-anchor="end">−13</text>
+
+    <text class="tl" x="150" y="144" text-anchor="end">松山信義</text>
+    <line class="arr" x1="579.6" y1="140" x2="505.7" y2="140"/>
+    <circle class="jl hollow" cx="579.6" cy="140" r="5.5"/><circle class="jf" cx="505.7" cy="140" r="6"/>
+    <text class="t" x="650" y="144">+36 → +25</text><text class="tv" x="752" y="144" text-anchor="end">−11</text>
+
+    <text class="tl" x="150" y="182" text-anchor="end">大安文山</text>
+    <line class="arr" x1="546" y1="178" x2="458.7" y2="178"/>
+    <circle class="jl hollow" cx="546" cy="178" r="5.5"/><circle class="jf" cx="458.7" cy="178" r="6"/>
+    <text class="t" x="650" y="182">+31 → +18</text><text class="tv" x="752" y="182" text-anchor="end">−13</text>
+
+    <text class="tl" x="150" y="220" text-anchor="end">內湖南港</text>
+    <line class="arr" x1="593" y1="216" x2="384.9" y2="216"/>
+    <circle class="jl hollow" cx="593" cy="216" r="5.5"/><circle class="jf" cx="384.9" cy="216" r="6"/>
+    <text class="t" x="650" y="220">+38 → +7</text><text class="tv" x="752" y="220" text-anchor="end">−31</text>
+
+    <text class="tl" x="150" y="258" text-anchor="end">士林北投</text>
+    <line class="arr" x1="505.7" y1="254" x2="264" y2="254"/>
+    <circle class="jl hollow" cx="505.7" cy="254" r="5.5"/><rect class="sf" x="258.5" y="248.5" width="11" height="11"/>
+    <text class="t" x="650" y="258">+25 → −11</text><text class="tv" x="752" y="258" text-anchor="end">−36</text>
+
+    <text class="tl" x="150" y="296" text-anchor="end">中山大同</text>
+    <line class="arr" x1="311" y1="292" x2="210.3" y2="292"/>
+    <rect class="sl hollow" x="306.5" y="287.5" width="9" height="9"/><rect class="sf" x="204.8" y="286.5" width="11" height="11"/>
+    <text class="t" x="650" y="296">−4 → −19</text><text class="tv" x="752" y="296" text-anchor="end">−15</text>
+  </svg>
+  </div>
+  <p><span class="chip v">已查證</span> 六個分區全部往沈伯洋的方向移動,幅度 11 到 36 點。移動最大的是士林北投(−36,由蔣領先轉為沈領先)與內湖南港(−31);最小的是松山信義(−11)。</p>
+
+  <h3 class="sub">兩家民調的分區比較</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>分區</th><th>TVBS 10 月<br>蔣 / 沈</th><th>領先</th><th>信民 9 月(合併)<br>蔣 / 沈</th><th>領先</th><th>樣本</th><th>兩家方向</th></tr></thead>
+    <tbody>
+      <tr><td>松山信義</td><td class="n">57 / 32</td><td class="n">蔣 +25</td><td class="n">48.7 / 28.3</td><td class="n">蔣 +20.4</td><td class="n">173</td><td>都偏蔣</td></tr>
+      <tr><td>大安文山</td><td class="n">53 / 35</td><td class="n">蔣 +18</td><td class="n">43.2 / 40.2</td><td class="n">蔣 +3.0</td><td class="n">232</td><td>都偏蔣,幅度差距大</td></tr>
+      <tr><td>中正萬華</td><td class="n">59 / 32</td><td class="n">蔣 +27</td><td class="n">40.4 / 47.0</td><td class="n">沈 +6.5</td><td class="n">139</td><td><b>不一致</b></td></tr>
+      <tr><td>內湖南港</td><td class="n">49 / 42</td><td class="n">蔣 +7</td><td class="n">37.8 / 43.3</td><td class="n">沈 +5.5</td><td class="n">167</td><td><b>不一致</b></td></tr>
+      <tr><td>士林北投</td><td class="n">39 / 50</td><td class="n">沈 +11</td><td class="n">39.9 / 43.8</td><td class="n">沈 +3.9</td><td class="n">220</td><td>都偏沈</td></tr>
+      <tr><td>中山大同</td><td class="n">35 / 54</td><td class="n">沈 +19</td><td class="n">39.4 / 41.1</td><td class="n">沈 +1.7</td><td class="n">147</td><td>都偏沈</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small muted"><span class="chip i">推論</span> 信民協會只公布 12 個行政區的數字;表中的分區合併是本簡報依各區樣本數加權計算,未經原機構的加權處理。TVBS 10 月未公布各分區的未決定比例與樣本數。</p>
+
+  <h3 class="sub">12 個行政區:2022 實際得票與信民 9 月民調</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>行政區</th><th>2022 實際<br>蔣 / 陳 / 黃</th><th>2026 信民 9 月<br>蔣 / 沈</th><th>領先</th><th>樣本</th><th>誤差約</th></tr></thead>
+    <tbody>
+      <tr><td>松山</td><td class="n">45.51 / 30.89 / 23.04</td><td class="n">48.1 / 31.6</td><td class="n">蔣 +16.5</td><td class="n">82</td><td class="n">±10.8</td></tr>
+      <tr><td>信義</td><td class="n">45.51 / 30.12 / 23.79</td><td class="n">49.3 / 25.3</td><td class="n">蔣 +24.0</td><td class="n">91</td><td class="n">±10.3</td></tr>
+      <tr><td>大安</td><td class="n">46.19 / 30.00 / 23.21</td><td class="n">43.2 / 44.3</td><td class="n">沈 +1.1</td><td class="n">120</td><td class="n">±8.9</td></tr>
+      <tr><td>文山</td><td class="n">48.47 / 25.57 / 25.20</td><td class="n">43.2 / 35.8</td><td class="n">蔣 +7.4</td><td class="n">112</td><td class="n">±9.3</td></tr>
+      <tr><td>中正</td><td class="n">43.38 / 30.38 / 25.57</td><td class="n">42.3 / 43.5</td><td class="n">沈 +1.2</td><td class="n">61</td><td class="n">±12.5</td></tr>
+      <tr><td>萬華</td><td class="n">39.98 / 33.93 / 25.38</td><td class="n">39.0 / 49.7</td><td class="n">沈 +10.7</td><td class="n">78</td><td class="n">±11.1</td></tr>
+      <tr><td>內湖</td><td class="n">40.87 / 28.70 / 29.87</td><td class="n">36.3 / 42.2</td><td class="n">沈 +5.9</td><td class="n">117</td><td class="n">±9.1</td></tr>
+      <tr><td>南港</td><td class="n">40.37 / 29.91 / 29.16</td><td class="n">41.4 / 45.9</td><td class="n">沈 +4.5</td><td class="n">50</td><td class="n">±13.9</td></tr>
+      <tr><td>士林</td><td class="n">37.64 / 37.34 / 24.25</td><td class="n">37.0 / 52.2</td><td class="n">沈 +15.2</td><td class="n">115</td><td class="n">±9.1</td></tr>
+      <tr><td>北投</td><td class="n">38.95 / 35.07 / 25.36</td><td class="n">43.1 / 34.6</td><td class="n">蔣 +8.5</td><td class="n">105</td><td class="n">±9.6</td></tr>
+      <tr><td>中山</td><td class="n">42.78 / 34.27 / 22.35</td><td class="n">35.0 / 46.3</td><td class="n">沈 +11.3</td><td class="n">95</td><td class="n">±10.1</td></tr>
+      <tr><td>大同</td><td class="n">32.95 / 40.28 / 26.21</td><td class="n">47.3 / 31.5</td><td class="n">蔣 +15.8</td><td class="n">52</td><td class="n">±13.6</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small muted">2022 年為三人競選(陳時中為民進黨提名、黃珊珊為無黨籍),與 2026 年的兩人對決不能直接相減比較。誤差為單一候選人支持度在 95% 信心水準下的約略範圍,由樣本數推算。</p>
+
+  <h3 class="sub">怎麼解讀</h3>
+  <ul class="notes">
+    <li><span class="chip i">推論</span> 兩家都同意的部分:松山信義是蔣萬安最穩的分區;中山大同與士林北投偏向沈伯洋。</li>
+    <li><span class="chip i">推論</span> 兩家分歧最大的是中正萬華與內湖南港(TVBS 是蔣領先,信民是沈領先),其次是大安文山。這三個分區是下一份民調最值得看的地方。</li>
+    <li><span class="chip i">推論</span> 內湖、南港是 2022 年黃珊珊得票最高的兩區(約 29–30%)。TVBS 顯示上屆投黃珊珊的選民有 53% 支持沈、39% 支持蔣,和內湖南港的大幅移動方向一致,但分區資料無法直接證明兩者的關係。</li>
+    <li><span class="chip i">推論</span> 信民民調中大同區蔣領先近 16 點,與 2022 年大同是陳時中唯一領先的行政區相反;該區只有 52 個樣本,這個結果很可能來自抽樣誤差。</li>
+  </ul>
+</section>
+</div>
+
+<div class="shared">
+<section>
+  <h2>閱讀前請留意</h2>
+  <ul class="notes">
+    <li>三種標示:<span class="chip v">已查證</span> 有報導原文可對照;<span class="chip">各方說法</span> 是當事人的說法;<span class="chip i">推論</span> 是本簡報的判斷。</li>
+    <li>只收錄機率抽樣的電話民調。街頭訪問、網路投票、政黨內部聲量數據都不採計。</li>
+    <li>市話民調可能低估年輕選民;跨機構比較不如同機構前後比較可靠。</li>
+    <li>預測是建檔第一天的基線,只在出現新的高品質民調或重大事件時調整。</li>
+    <li>本版配色參考沈伯洋陣營公開主視覺的橘色系,為個人偏好的配色版本;內容、措辭與中性版完全相同,不代表任何陣營。</li>
+  </ul>
+  <div class="notice"><b>轉發提醒:</b>本頁含民調數字。依選罷法,11/18 至 11/28 投票結束前不得發布或轉述民調資料,這段期間請勿轉發本頁。</div>
+</section>
+
+<section>
+  <h2>複製文字版</h2>
+  <p class="small muted">適合貼到 Telegram 或 LINE。</p>
+  <textarea id="copytext" readonly>【台北市長選情|10/12 晚上】距投票 47 天
+一句話:首場電視辯論協商未定日期(主辦提 10/31、沈方提 10/24),另有五家媒體邀第二場;蔣萬安將上黃國昌、趙少康節目。
+新事件:
+・【各方說法】TVBS、三立 10/12 下午協商逾一小時,同意納入交叉詰問,首場日期與總場次未定。蔣方同意 10/31,批沈方「把辯論當叫陣工具」;沈方發言人蔡一愷稱可提前到 10/24,主張至少四場。影響:高。
+・【已查證】自由時報、中視、台視、民視、鏡電視聯合邀第二場辯論,沈已簽意向書;蔣上午稱「依照慣例,我們就舉辦 1 場」;壹蘋、Newtalk 報導蔣方會後表示將參加第二場。影響:中。
+・【已查證】蔣萬安 10/15(四)上民眾黨主席黃國昌節目專訪;另據報導 10/19 上趙少康節目【各方說法】。影響:中,對象為民眾黨支持者與上屆黃珊珊選民。
+・【已查證】沈伯洋「台北大洋流」第二站 10/18(日)松山、信義。影響:低。
+民調:本次無新民調。最新仍為 TVBS(10/3–7)蔣 49、沈 41、未決定 11。
+聲浪:討論集中在辯論日期與場次之爭(僅新聞側觀察)。
+預測:維持,無實質新訊號。【推論】當選機率 蔣 60–75%、沈 25–40%;得票率 蔣 50–55%、沈 44–49%。
+模型:蔣 59% / 沈 41%(二黨得票率中位數 沈 49.1%,λ 臨界 0.53);勝率略低於快照下限,列為需重新檢查,未調整快照。
+行程:10/13(二)兩人均未查到已公布的公開行程;10/14(三)沈上中廣趙少康專訪(三立、今周刊報導),蔣尚未查到。
+接下來:首場辯論日期再協商(沈方提議約兩天後)、10/15 蔣上黃國昌節目、10/18 大洋流松山信義、10/23 號次抽籤。
+民調資訊:TVBS 民意調查中心,2026/10/3、10/5–7,市內電話後四碼隨機抽樣,20 歲以上台北市民 1,120 人,誤差 ±2.9,經費 TVBS。
+※ 11/18 起請勿轉發民調數字。</textarea>
+  <button id="copybtn" type="button">複製文字</button>
+</section>
+
+<section>
+  <h2>來源</h2>
+  <ul class="sources">
+    <li><a href="https://udn.com/vote2026/story/124652/9803622">聯合報:TVBS 10 月民調</a></li>
+    <li><a href="https://newtalk.tw/news/view/2026-05-27/1037753">Newtalk:TVBS 5 月民調</a></li>
+    <li><a href="https://www.setn.com/news/1911133">三立:信民協會民調方法</a></li>
+    <li><a href="https://www.chinatimes.com/realtimenews/20260928000018-260407">中時:信民民調樣本政黨結構</a></li>
+    <li><a href="https://udn.com/news/story/124652/9586002">聯合報:震傳媒 6 月民調</a>、<a href="https://disp.cc/b/HatePolitics/i6VM">震傳媒民調說明(轉載)</a></li>
+    <li><a href="https://post.cec.gov.tw/upload/file/2024-12-23/544f0f36-1873-49cc-8dbf-323c4294454c/3af02976e6ebbe6315f528cf92e60864.pdf">中選會:民調發布應載明事項(選罷法第 52 條)</a></li>
+    <li><a href="https://udn.com/vote2026/story/124652/9808144">聯合報:車掃首航</a>、<a href="https://udn.com/vote2026/story/124652/9808104">車掃狀況</a></li>
+    <li><a href="https://news.tvbs.com.tw/politics/4034733">TVBS:與三立合辦台北市長電視辯論</a></li>
+    <li><a href="https://www.chinatimes.com/realtimenews/20261012003281-260407">中時:首場辯論日期協商未定</a>、<a href="https://newtalk.tw/news/view/2026-10-12/1065101">Newtalk:沈陣營提 10/24</a>、<a href="https://news.nextapple.com/politics/20261012/B3E746DF1C376C742F724C2DBA7F2E3A">壹蘋:蔣陣營會後表態第二場</a></li>
+    <li><a href="https://cna.com.tw/news/aipl/202610120179.aspx">中央社:五家媒體邀第二場辯論</a></li>
+    <li><a href="https://udn.com/news/story/6656/9809179">聯合報:蔣萬安週四上黃國昌專訪</a>、<a href="https://www.eracom.com.tw/EraNews/Home/political/2026-10-12/2493853.html">年代:蔣 19 日接受趙少康專訪</a></li>
+    <li><a href="https://www.setn.com/news/1921174">三立:沈伯洋 10/14 上中廣專訪</a>、<a href="https://www.businesstoday.com.tw/article/category/183027/post/202610110011/">今周刊:趙少康 14 日二訪沈伯洋</a></li>
+    <li><a href="https://puma.taipei/taipei-current">沈伯洋競選官網:台北大洋流車掃頁</a></li>
+    <li><a href="https://newtalk.tw/news/view/2026-10-11/1064856">Newtalk:中華民國立場攻防</a></li>
+    <li><a href="https://www.ettoday.net/news/20261011/3252796.htm">ETtoday:「造謠」攻防</a></li>
+    <li><a href="https://udn.com/vote2026/story/124652/9808048">聯合報:游錫堃發言與蔣辦回應</a></li>
+    <li><a href="https://cna.com.tw/news/aipl/202609045002.aspx">中央社:登記參選名單</a></li>
+    <li><a href="https://www.cw.com.tw/article/5141087">天下:選舉時程</a></li>
+    <li><a href="https://www.chinatimes.com/realtimenews/20261008004675-260407">中時:TVBS 10 月分區數字</a></li>
+    <li><a href="https://cc.tvbs.com.tw/portal/file/poll_center/2026/20260527/87ed4a7009e43fa1cea459b7f1785f83.pdf">TVBS 民調中心:5 月民調報告(含分區交叉表)</a></li>
+    <li><a href="https://www.ettoday.net/news/20260922/3242142.htm">ETtoday:信民協會 9 月 12 行政區數字</a></li>
+    <li><a href="https://election.ltn.com.tw/2022/realtime">自由時報:2022 台北市長各區開票結果</a></li>
+    <li><a href="https://www.facebook.com/YaitaAkio/posts/1108055891727861/">矢板明夫俱樂部臉書:信民民調解讀(9/22)</a></li>
+    <li><a href="https://puma.taipei/schedule">沈伯洋競選官網:行程頁</a></li>
+    <li><a href="https://rti.org.tw/news?pid=236706&amp;uid=3">中央廣播電臺:蔣萬安競總 10/26 成立</a></li>
+    <li><a href="https://news.tvbs.com.tw/politics/4033530">TVBS:2022 投票對象的流向(10 月民調)</a>、<a href="https://www.setn.com/news/1919620">三立:2022 未投票者與年齡交叉</a></li>
+    <li><a href="https://www.cna.com.tw/news/aipl/202211210130.aspx">中央社:2022 台北市長選舉人數</a></li>
+    <li><a href="https://news.tvbs.com.tw/politics/993907">TVBS:2018 年 9 月台北市長民調</a>、<a href="https://www.mirrormedia.mg/story/20181109edi009">鏡週刊:2018 年 11 月引述蘋果日報民調</a></li>
+  </ul>
+</section>
+</div>
+
+<footer class="sitefoot" style="max-width:760px;margin:40px auto 0;padding-top:16px;border-top:1px solid var(--line);font-size:13px;line-height:1.7;color:var(--muted)">
+  <p style="margin:0">本頁為個人整理的公開資料彙整,不代表任何候選人、政黨或媒體。每天台北時間約 08:20 與 20:20 更新,最後產生時間:2026-10-12 20:46。</p>
+  <p style="margin:6px 0 0">依《公職人員選舉罷免法》,11/18 起至 11/28 投票截止前,本頁不顯示任何民調與模型數字。</p>
+</footer>
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('copybtn'), ta=document.getElementById('copytext');
+  btn.addEventListener('click',function(){
+    function done(){btn.textContent='已複製';setTimeout(function(){btn.textContent='複製文字'},1800)}
+    function fallback(){ta.focus();ta.select();btn.textContent='已選取,請按複製'}
+    try{navigator.clipboard.writeText(ta.value).then(done,fallback)}catch(e){fallback()}
+  });
+})();
+
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('[role="tab"]'));
+  function show(name,focus){
+    tabs.forEach(function(t){
+      var on=t.id==='tab-'+name;
+      t.setAttribute('aria-selected',on?'true':'false');
+      t.tabIndex=on?0:-1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
+      if(on&&focus)t.focus();
+    });
+    try{localStorage.setItem('brief-tab',name)}catch(e){}
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){show(t.id.slice(4))});
+    t.addEventListener('keydown',function(e){
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
+        var n=tabs[(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length];
+        show(n.id.slice(4),true);e.preventDefault();
+      }
+    });
+  });
+  [].forEach.call(document.querySelectorAll('[data-goto]'),function(b){
+    b.addEventListener('click',function(){
+      show(b.getAttribute('data-goto'));
+      document.querySelector('.tabs').scrollIntoView({block:'start'});
+    });
+  });
+  var start=(location.hash==='#polls')?'polls':null;
+  if(!start){try{start=localStorage.getItem('brief-tab')}catch(e){}}
+  if(start==='polls')show('polls');
+})();
+</script>
+</body>
+</html>
